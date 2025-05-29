@@ -5,6 +5,7 @@ from config import DevelopmentConfig
 from flask_security import Security, SQLAlchemyUserDatastore, auth_required, hash_password
 from application.sec import datastore
 from werkzeug.security import generate_password_hash
+import os
 
 def init_database(app):
     with app.app_context():
@@ -51,5 +52,6 @@ load_dotenv()
 app = create_app()
 init_database(app)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
