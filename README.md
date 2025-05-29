@@ -1,5 +1,10 @@
 # IBD Journal Web App
-Made a web app for the IBD mobile app.
+Made a web app to complement the IBD mobile app-
+###**https://parvpsingh.github.io/IBD-webapp/**  
+
+## **To explore the app's full capabilites, please login with the following credentials -**
+###**email:** rahul@gmail.com  
+###**password:** rahul
 
 ## Features
 - Track, analyze, and understand your IBD journey
@@ -21,10 +26,3 @@ Made a web app for the IBD mobile app.
 - Google GenAI for embeddings and content generation
 
 ---
-
-# **IF ANYONE WANTS TO CHECK THE APP'S FULL CAPABILITIES PLEASE VISIT:**  
-# **https://parvpsingh.github.io/IBD-webapp/**  
-# **AND LOGIN WITH THE FOLLOWING CREDENTIALS -**
-
-**email:** rahul@gmail.com  
-**password:** rahul
