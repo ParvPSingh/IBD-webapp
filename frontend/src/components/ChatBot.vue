@@ -61,7 +61,7 @@ async function askBot() {
   loading.value = true
   messages.value.push({ role: 'user', text: question.value })
   try {
-    const res = await fetch(`${apiUrl}/process_data/${userId}`, {
+    const res = await fetch(`${apiUrl}/process_data`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: userId, question: question.value })
@@ -275,6 +275,4 @@ form button:hover:not(:disabled) {
     padding: 1.1rem 0.4rem 0.6rem 0.4rem;
   }
 }
-
-
 </style>

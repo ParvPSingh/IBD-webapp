@@ -520,9 +520,10 @@ def classify(user_id):
     # Return the JSON food importance
     return jsonify({'Food_trigger_score': importance_df.to_dict(orient='records')})
 
-@app.route('/process_data/<int:user_id>', methods=['POST'])
-def ask_rag(user_id):
+@app.route('/process_data', methods=['POST'])
+def ask_rag():
     data = request.get_json()
+    user_id = data.get('user_id')
     question = data.get('question')
 
     if not user_id or not question:
