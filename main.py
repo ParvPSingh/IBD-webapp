@@ -45,9 +45,11 @@ def create_app():
         import application.controllers
     return app
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = create_app()
 init_database(app)
-user_vector_dbs = {}
 
 if __name__ == '__main__':
     app.run(debug=True)

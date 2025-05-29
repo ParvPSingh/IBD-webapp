@@ -43,13 +43,29 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
+import { onMounted } from 'vue'         // <-- Correct import!
 import NavBar from './NavBar.vue'
+
 const route = useRoute()
 const userId = route.params.user_id
 
 function openChatbot() {
-  // Emit or set a global state to open the chatbot modal if using a global chatbot component
-  // For example, use an event bus or a store
   window.dispatchEvent(new CustomEvent('open-rag-chatbot'))
 }
+
+// Call the vector_db endpoint when the page loads
+onMounted(async () => {
+  if (userId) {
+    try {
+      await fetch(`http://localhost:5000/vector_db/${userId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      // Optionally handle the response here
+    } catch (e) {
+      // Optionally handle errors here
+      console.error('Failed to initialize vector DB:', e)
+    }
+  }
+})
 </script>

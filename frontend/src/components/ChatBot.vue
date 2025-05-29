@@ -37,14 +37,7 @@ const error = ref('')
 const messages = ref([])
 
 let userId = null;
-const user = localStorage.getItem('user');
-if (user) {
-  try {
-    userId = JSON.parse(user).user_id;
-  } catch (e) {
-    userId = null;
-  }
-}
+userId = localStorage.getItem('user_id');
 
 async function askBot() {
   if (!question.value) return

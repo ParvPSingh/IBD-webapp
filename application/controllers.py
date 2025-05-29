@@ -29,7 +29,7 @@ from langchain_community.chat_models import ChatCohere
 from IPython.display import Markdown
 from application.validation import ValidationError
 from datetime import datetime
-from main import user_vector_dbs
+from application.vector_db_store import user_vector_dbs
 
 # Create a new user
 @app.route('/users', methods=['POST'])
@@ -394,14 +394,6 @@ def user_login():
         return jsonify({"error_message": "You don't have access to the website"}), 401
 
     if check_password_hash(user.password, data.get("password")):
-        # --- INITIALIZE VECTOR DB HERE ---
-        from application.vector_db import create_vector_db
-        food_data = get_food_data_for_user(user.id)
-        symptom_data = get_symptom_data_for_user(user.id)
-        if not food_data.empty and not symptom_data.empty:
-            db, client, embed_fn = create_vector_db(food_data, symptom_data)
-            user_vector_dbs[user.id] = (db, client, embed_fn)
-        # --- END VECTOR DB INIT ---
         return jsonify({"name": user.name, "token": user.get_auth_token(), "email": user.email, "role": user.roles[0].name, "user_id": user.id, "active": user.active})
     else:
         return jsonify({"error_message": "Wrong Password"}), 400
@@ -420,6 +412,26 @@ def user_login():
     symptoms_final['date'] = symptoms_ct_df.iloc[:, -1]
     symptoms_final['Severity_score'] = symptoms_ct_df.iloc[:, :-1].sum(axis=1)
     return symptoms_final'''
+
+@app.route('/vector_db/<int:user_id>', methods=['POST'])
+def vector_db(user_id):
+    if not user_id:
+        return jsonify({'error': 'user_id required in request'}), 400
+
+    # Fetch data from the database for this user
+    symptoms = get_symptom_data_for_user(user_id)
+    items = get_food_data_for_user(user_id)
+
+    if symptoms.empty or items.empty:
+        return jsonify({'error': 'No data found for this user.'}), 404
+
+    # Create vector DB
+    db, client, embed_fn = create_vector_db(items, symptoms)
+    
+    # Store in global dictionary
+    user_vector_dbs[user_id] = (db, client, embed_fn)
+    print("vector db initialized for user:", user_id)
+    return jsonify({'message': 'Vector DB created successfully for user', 'user_id': user_id})
 
 @app.route('/trees_classifier/<int:user_id>', methods=['POST'])
 def classify(user_id):
@@ -516,7 +528,6 @@ def ask_rag(user_id):
     if not user_id or not question:
         return jsonify({'error': 'user_id and question are required'}), 400
 
-    from main import user_vector_dbs
     if user_id not in user_vector_dbs:
         return jsonify({'error': 'Vector DB not initialized for this user.'}), 404
 
