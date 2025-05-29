@@ -26,7 +26,7 @@
       <thead>
         <tr>
           <th>Date</th>
-          <th>Water (ml)</th>
+          <th>Water (no. of glasses)</th>
           <th>Stress Level</th>
           <th>Actions</th>
         </tr>
@@ -51,7 +51,7 @@
         <h3>Edit Food Intake</h3>
         <form @submit.prevent="submitEdit">
           <div class="form-group">
-            <label>Water (ml):</label>
+            <label>Water (no. of glasses):</label>
             <input type="number" min="0" v-model.number="editForm.water" required />
           </div>
           <div class="form-group">
