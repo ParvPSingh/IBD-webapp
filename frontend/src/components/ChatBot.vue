@@ -10,7 +10,7 @@
         <div class="chat-history">
           <div v-for="(msg, i) in messages" :key="i" :class="msg.role">
             <b v-if="msg.role==='user'">You</b>
-            <b v-else>Bot</b>
+            <b v-else>></b>
             <span v-if="msg.role==='user'">{{ msg.text }}</span>
             <VueMarkdownIt v-else :source="msg.text" />
           </div>
