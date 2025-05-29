@@ -38,7 +38,14 @@ const messages = ref([])
 const apiUrl = import.meta.env.VITE_API_URL;
 
 let userId = null;
-userId = localStorage.getItem('user_id');
+const user = localStorage.getItem('user');
+if (user) {
+  try {
+    userId = JSON.parse(user).user_id;
+  } catch (e) {
+    userId = null;
+  }
+}
 
 async function askBot() {
   if (!question.value) return
