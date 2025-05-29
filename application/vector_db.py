@@ -7,11 +7,12 @@ from google.genai import types
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from google.api_core import retry
 import chromadb
+import os
 
 class GeminiEmbeddingFunction(EmbeddingFunction):
     # Specify whether to generate embeddings for documents, or queries
     document_mode = True
-    client = genai.Client(api_key='AIzaSyB-Sk5Ej5egOgC44Fe087GFm0E6OlMRJVw')
+    client = genai.Client(api_key=os.environ.get('GEMINI_API_KEY'))
 
     def is_retriable(exception):
         # Customize this logic as needed for your use case
@@ -60,7 +61,7 @@ def create_vector_db(food_data, symptom_data):
     
     # Updated CohereEmbeddings initialization
     embeddings = CohereEmbeddings(
-        cohere_api_key="2HR7UI4cdTxHX7spWR4b8U2i01flJ6ygE5Zc0v3b",
+        cohere_api_key="22",
         model="embed-multilingual-v2.0",  # Specify the model
         user_agent="ibdj-app"  # Add user agent
     )
