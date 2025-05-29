@@ -11,18 +11,16 @@
       </div>
     </div>
   </div>
-    <ChatBot />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute()
-const userId = route.params.user_id
+const userId = localStorage.getItem('user_id') || route.params.user_id;
 const graphs = ref(null)
 const error = ref('')
 const loading = ref(true)

@@ -39,8 +39,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(DevelopmentConfig)
     CORS(app, resources={r"/*": {"origins": [
-        "https://parvpsingh.github.io",
-    ]}})
+        "https://parvpsingh.github.io"
+    ],
+    "allow_headers": "*",
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    }})
     #CORS(app, resources={r"/*":{'origins': 'http://127.0.0.1:8080', "allow_headers":"Access-Control-Allow-Origin"}})
     db.init_app(app)
     app.security = Security(app, datastore=datastore)
