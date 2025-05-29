@@ -45,26 +45,3 @@ def create_vector_db(food_data, symptom_data):
     db = chroma_client.get_or_create_collection(name=DB_NAME, embedding_function=embed_fn)
     db.add(documents=documents, ids=[str(i) for i in range(len(documents))])
     return db, embed_fn.client, embed_fn
-
-
-'''def create_vector_db(food_data, symptom_data):
-    food_docs = food_data.to_string(index=False)
-    symptom_docs = symptom_data.to_string(index=False)
-    raw_docs = f"Food Data:\n{food_docs}\n\nSymptom Data:\n{symptom_docs}"
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len
-    )
-    texts = text_splitter.split_text(raw_docs)
-    
-    # Updated CohereEmbeddings initialization
-    embeddings = CohereEmbeddings(
-        cohere_api_key="22",
-        model="embed-multilingual-v2.0",  # Specify the model
-        user_agent="ibdj-app"  # Add user agent
-    )
-    
-    vectorstore = FAISS.from_texts(texts=texts, embedding=embeddings)
-    return vectorstore'''

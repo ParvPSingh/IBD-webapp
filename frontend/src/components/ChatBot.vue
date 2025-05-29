@@ -10,9 +10,9 @@
         <div class="chat-history">
           <div v-for="(msg, i) in messages" :key="i" :class="msg.role">
             <b v-if="msg.role==='user'">You</b>
-            <b v-else><</b>
+            <b v-else>Bot</b>
             <span v-if="msg.role==='user'">{{ msg.text }}</span>
-              <VueMarkdownIt v-else :source="msg.text" />
+            <VueMarkdownIt v-else :source="msg.text" />
           </div>
         </div>
         <form @submit.prevent="askBot">
@@ -28,7 +28,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import VueMarkdownIt from 'vue3-markdown-it'
 
 const showModal = ref(false)
@@ -36,25 +35,28 @@ const question = ref('')
 const loading = ref(false)
 const error = ref('')
 const messages = ref([])
-const apiUrl = import.meta.env.VITE_API_URL;
-const route = useRoute()
+const apiUrl = import.meta.env.VITE_API_URL
 
-let userId = null;
-const user = localStorage.getItem('user');
-if (user) {
-  try {
-    userId = JSON.parse(user).user_id;
-  } catch (e) {
-    userId = null;
+function getUserId() {
+  const user = localStorage.getItem('user')
+  if (user) {
+    try {
+      const parsed = JSON.parse(user)
+      return parsed.user_id
+    } catch (e) {
+      return null
+    }
   }
-}
-// fallback to route param if needed
-if (!userId) {
-  userId = route.params.user_id;
+  return null
 }
 
 async function askBot() {
   if (!question.value) return
+  const userId = getUserId()
+  if (!userId) {
+    error.value = "User not found. Please log in again."
+    return
+  }
   error.value = ''
   loading.value = true
   messages.value.push({ role: 'user', text: question.value })
