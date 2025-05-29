@@ -30,6 +30,7 @@ from IPython.display import Markdown
 from application.validation import ValidationError
 from datetime import datetime
 from application.vector_db_store import user_vector_dbs
+from flask_cors import cross_origin
 
 # Create a new user
 @app.route('/users', methods=['POST'])
@@ -521,7 +522,10 @@ def classify(user_id):
     return jsonify({'Food_trigger_score': importance_df.to_dict(orient='records')})
 
 @app.route('/process_data', methods=['POST'])
+@cross_origin(origins=["https://parvpsingh.github.io"])
 def ask_rag():
+    if request.method == 'OPTIONS':
+        return '', 200
     data = request.get_json()
     user_id = data.get('user_id')
     question = data.get('question')
