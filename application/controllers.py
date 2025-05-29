@@ -605,7 +605,7 @@ def user_visualizations(user_id):
 
     # Set up directories and userId
     userId = str(user_id)
-    base_dir = '/home/parv/projects/ibdj2/frontend/graphs'
+    base_dir = os.path.join(app.root_path, 'static', 'graphs')
     os.makedirs(f"{base_dir}/stoolbar", exist_ok=True)
     os.makedirs(f"{base_dir}/stoolline", exist_ok=True)
     os.makedirs(f"{base_dir}/mealpie", exist_ok=True)
@@ -622,7 +622,7 @@ def user_visualizations(user_id):
     plt.title("Distribution of Stool Colors")
     plt.xlabel("Stool Color")
     plt.ylabel("Count")
-    stoolbar_path = f"{base_dir}/stoolbar/{userId}.png"
+    stoolbar_path = os.path.join(base_dir, "stoolbar", f"{userId}.png")
     plt.savefig(stoolbar_path)
     plt.close()
 
@@ -634,7 +634,7 @@ def user_visualizations(user_id):
     plt.title("Stool Consistency Over Time")
     plt.xlabel("date")
     plt.ylabel("Stool Consistency")
-    stoolline_path = f"{base_dir}/stoolline/{userId}.png"
+    stoolline_path = os.path.join(base_dir, "stoolline", f"{userId}.png")
     plt.savefig(stoolline_path)
     plt.close()
 
@@ -645,7 +645,7 @@ def user_visualizations(user_id):
     plt.figure(figsize=(10, 6))
     food_counts.plot.pie(autopct='%1.1f%%')
     plt.title("Proportion of Different Food Items")
-    mealpie_path = f"{base_dir}/mealpie/{userId}.png"
+    mealpie_path = os.path.join(base_dir, "mealpie", f"{userId}.png")
     plt.savefig(mealpie_path)
     plt.close()
 
@@ -653,7 +653,7 @@ def user_visualizations(user_id):
     plt.figure(figsize=(10, 6))
     sns.scatterplot(x='stressLevel', y='water', data=meal_data)
     plt.title("Scatter Plot: Stress vs. Water")
-    stressscater_path = f"{base_dir}/stressscater/{userId}.png"
+    stressscater_path = os.path.join(base_dir, "stressscater", f"{userId}.png")
     plt.savefig(stressscater_path)
     plt.close()
 
@@ -663,7 +663,7 @@ def user_visualizations(user_id):
     plt.title("Distribution of Blood in Stool")
     plt.xlabel("Presence of Blood")
     plt.ylabel("Count")
-    bloodbar_path = f"{base_dir}/bloodbar/{userId}.png"
+    bloodbar_path = os.path.join(base_dir, "bloodbar", f"{userId}.png")
     plt.savefig(bloodbar_path)
     plt.close()
 
@@ -673,7 +673,7 @@ def user_visualizations(user_id):
     plt.figure(figsize=(10, 8))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', square=True)
     plt.title("Correlation Matrix for Symptom Data")
-    corr_path = f"{base_dir}/corr/{userId}.png"
+    corr_path = os.path.join(base_dir, "corr", f"{userId}.png")
     plt.savefig(corr_path)
     plt.close()
 
@@ -684,7 +684,7 @@ def user_visualizations(user_id):
     plt.title("Stool Frequency Over Time")
     plt.xlabel("date")
     plt.ylabel("Stool Frequency")
-    freqbar_path = f"{base_dir}/freqbar/{userId}.png"
+    freqbar_path = os.path.join(base_dir, "freqbar", f"{userId}.png")
     plt.savefig(freqbar_path)
     plt.close()
 
@@ -695,7 +695,7 @@ def user_visualizations(user_id):
     plt.title("Stress Over Time")
     plt.xlabel("date")
     plt.ylabel("Stress Level")
-    stressline_path = f"{base_dir}/stressline/{userId}.png"
+    stressline_path = os.path.join(base_dir, "stressline", f"{userId}.png")
     plt.savefig(stressline_path)
     plt.close()
 

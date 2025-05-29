@@ -7,7 +7,7 @@
     <div v-if="graphs" class="graphs-grid">
       <div v-for="(src, key) in graphs" :key="key" class="graph-card">
         <h3>{{ graphTitles[key] || key }}</h3>
-        <img :src="toPublicPath(src)" :alt="key" />
+        <img :src="fullGraphUrl(src)" :alt="key" />
       </div>
     </div>
   </div>
@@ -20,7 +20,21 @@ import NavBar from './NavBar.vue'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute()
-const userId = localStorage.getItem('user_id') || route.params.user_id;
+
+// Always extract user_id from the user object in localStorage if present
+let userId = null;
+const user = localStorage.getItem('user');
+if (user) {
+  try {
+    userId = JSON.parse(user).user_id;
+  } catch (e) {
+    userId = null;
+  }
+}
+if (!userId) {
+  userId = route.params.user_id;
+}
+
 const graphs = ref(null)
 const error = ref('')
 const loading = ref(true)
@@ -36,15 +50,23 @@ const graphTitles = {
   stressline: 'Stress Over Time'
 }
 
-function toPublicPath(path) {
-  const idx = path.indexOf('/graphs/')
-  return idx !== -1 ? path.slice(idx) : path
+// Convert backend file path to public URL
+function fullGraphUrl(path) {
+  // If path contains '/static/graphs/', use that part
+  const idx = path.indexOf('/static/graphs/');
+  const urlPath = idx !== -1 ? path.slice(idx) : path;
+  return apiUrl + urlPath;
 }
 
 async function fetchGraphs() {
   error.value = ''
   graphs.value = null
   loading.value = true
+  if (!userId) {
+    error.value = 'User not found. Please log in again.'
+    loading.value = false
+    return
+  }
   try {
     const res = await fetch(`${apiUrl}/user_visualizations/${userId}`, {
       method: 'POST'
@@ -64,7 +86,6 @@ async function fetchGraphs() {
 onMounted(fetchGraphs)
 </script>
 <style scoped>
-
 .graph-card img {
   display: block;
   margin: 0 auto;
