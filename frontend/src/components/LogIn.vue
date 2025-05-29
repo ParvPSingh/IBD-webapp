@@ -28,12 +28,13 @@ const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
+const apiUrl = import.meta.env.VITE_API_URL;
 
 async function login() {
   error.value = ''
   loading.value = true
   try {
-    const res = await fetch('http://localhost:5000/login_user', {
+    const res = await fetch(`${apiUrl}/login_user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email.value, password: password.value })

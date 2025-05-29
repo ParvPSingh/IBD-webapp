@@ -35,6 +35,7 @@ const question = ref('')
 const loading = ref(false)
 const error = ref('')
 const messages = ref([])
+const apiUrl = import.meta.env.VITE_API_URL;
 
 let userId = null;
 userId = localStorage.getItem('user_id');
@@ -45,7 +46,7 @@ async function askBot() {
   loading.value = true
   messages.value.push({ role: 'user', text: question.value })
   try {
-    const res = await fetch(`http://localhost:5000/process_data/${userId}`, {
+    const res = await fetch(`${apiUrl}/process_data/${userId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: userId, question: question.value })

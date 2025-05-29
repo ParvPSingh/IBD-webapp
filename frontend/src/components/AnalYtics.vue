@@ -20,6 +20,7 @@ import { useRoute } from 'vue-router'
 import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute()
 const userId = route.params.user_id
 const graphs = ref(null)
@@ -47,7 +48,7 @@ async function fetchGraphs() {
   graphs.value = null
   loading.value = true
   try {
-    const res = await fetch(`http://localhost:5000/user_visualizations/${userId}`, {
+    const res = await fetch(`${apiUrl}/user_visualizations/${userId}`, {
       method: 'POST'
     })
     const data = await res.json()

@@ -45,6 +45,7 @@
 import { useRoute } from 'vue-router'
 import { onMounted } from 'vue'         // <-- Correct import!
 import NavBar from './NavBar.vue'
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const route = useRoute()
 const userId = route.params.user_id
@@ -57,7 +58,7 @@ function openChatbot() {
 onMounted(async () => {
   if (userId) {
     try {
-      await fetch(`http://localhost:5000/vector_db/${userId}`, {
+      await fetch(`${apiUrl}/vector_db/${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       })

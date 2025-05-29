@@ -236,6 +236,7 @@ import { useRoute } from 'vue-router'
 import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const showChart = ref(false)
 const route = useRoute()
 const userId = route.params.user_id
@@ -269,7 +270,7 @@ async function fetchSymptoms() {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/symptoms/user/${userId}`)
+    const res = await fetch(`${apiUrl}/symptoms/user/${userId}`)
     symptoms.value = await res.json()
   } catch (e) {
     error.value = 'Could not fetch symptoms'
@@ -282,7 +283,7 @@ async function submitSymptom() {
   success.value = ''
   loading.value = true
   try {
-    const res = await fetch(`http://localhost:5000/symptoms/${userId}`, {
+    const res = await fetch(`${apiUrl}/symptoms/${userId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
@@ -321,7 +322,7 @@ async function submitEdit() {
   error.value = ''
   loading.value = true
   try {
-    const res = await fetch(`http://localhost:5000/symptoms/${editId.value}`, {
+    const res = await fetch(`${apiUrl}/symptoms/${editId.value}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editForm)
@@ -344,7 +345,7 @@ async function deleteSymptom(id) {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/symptoms/${id}`, {
+    const res = await fetch(`${apiUrl}/symptoms/${id}`, {
       method: 'DELETE'
     })
     const data = await res.json()

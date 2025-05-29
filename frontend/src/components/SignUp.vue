@@ -28,6 +28,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const router = useRouter()
 const name = ref('')
 const email = ref('')
@@ -41,7 +42,7 @@ async function signup() {
   success.value = ''
   loading.value = true
   try {
-    const res = await fetch('http://localhost:5000/users', {
+    const res = await fetch(`${apiUrl}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: name.value, email: email.value, password: password.value })

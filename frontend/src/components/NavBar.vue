@@ -21,6 +21,7 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function logout() {
   // Clear auth tokens or user info here if needed

@@ -145,6 +145,7 @@ import { useRoute } from 'vue-router'
 import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const route = useRoute()
 const userId = route.params.user_id
 const foods = ref([])
@@ -169,7 +170,7 @@ async function fetchFoods() {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/food/user/${userId}`)
+    const res = await fetch(`${apiUrl}/food/user/${userId}`)
     foods.value = await res.json()
   } catch (e) {
     error.value = 'Could not fetch food intakes'
@@ -185,14 +186,14 @@ async function submitFood() {
     const todayFood = foods.value.find(f => f.date.split('T')[0] === today)
     if (todayFood) {
       // Update existing food intake for today
-      await fetch(`http://localhost:5000/food/${todayFood.id}`, {
+      await fetch(`${apiUrl}/food/${todayFood.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
       })
     } else {
       // Create new food intake for today
-      await fetch(`http://localhost:5000/food/${userId}`, {
+      await fetch(`${apiUrl}/food/${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -216,7 +217,7 @@ async function submitEdit() {
   error.value = ''
   loading.value = true
   try {
-    const res = await fetch(`http://localhost:5000/food/${editId.value}`, {
+    const res = await fetch(`${apiUrl}/food/${editId.value}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editForm)
@@ -239,7 +240,7 @@ async function deleteFood(id) {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/food/${id}`, {
+    const res = await fetch(`${apiUrl}/food/${id}`, {
       method: 'DELETE'
     })
     const data = await res.json()
@@ -272,7 +273,7 @@ async function fetchMeals(food_intake_id) {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/meals/food/${food_intake_id}`)
+    const res = await fetch(`${apiUrl}/meals/food/${food_intake_id}`)
     meals.value = (await res.json()).map(m => ({ ...m, changed: false }))
   } catch (e) {
     error.value = 'Could not fetch meals'
@@ -284,7 +285,7 @@ async function updateMeal(meal) {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/meals/${meal.id}`, {
+    const res = await fetch(`${apiUrl}/meals/${meal.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ meal_type: meal.meal_type, item: meal.item })
@@ -307,7 +308,7 @@ async function deleteMeal(id) {
   loading.value = true
   error.value = ''
   try {
-    const res = await fetch(`http://localhost:5000/meals/${id}`, {
+    const res = await fetch(`${apiUrl}/meals/${id}`, {
       method: 'DELETE'
     })
     const data = await res.json()
@@ -346,7 +347,7 @@ async function fetchTodayMeals() {
     return
   }
   try {
-    const res = await fetch(`http://localhost:5000/meals/food/${todayFood.id}`)
+    const res = await fetch(`${apiUrl}/meals/food/${todayFood.id}`)
     todayMeals.value = await res.json()
   } catch (e) {
     todayMeals.value = []
@@ -359,7 +360,7 @@ async function addMealForToday() {
   loading.value = true
   try {
     // Always use the new backend logic: send user_id, meal_type, item
-    const res = await fetch(`http://localhost:5000/meals/${userId}`, {
+    const res = await fetch(`${apiUrl}/meals/${userId}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
