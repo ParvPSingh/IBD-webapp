@@ -226,14 +226,12 @@
       </div>
     </div>
   </div>
-    <ChatBot />
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
 const apiUrl = import.meta.env.VITE_API_URL;

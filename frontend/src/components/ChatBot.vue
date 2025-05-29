@@ -28,6 +28,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import VueMarkdownIt from 'vue3-markdown-it'
 
 const showModal = ref(false)

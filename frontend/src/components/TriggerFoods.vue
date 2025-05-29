@@ -27,13 +27,11 @@
     </div>
     <div v-else-if="!loading && !error" class="info">No data to display.</div>
   </div>
-  <ChatBot />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import ChatBot from './ChatBot.vue'
 import NavBar from './NavBar.vue'
 
 const route = useRoute()

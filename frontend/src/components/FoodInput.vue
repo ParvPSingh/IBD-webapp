@@ -135,7 +135,6 @@
       </div>
     </div>
   </div>
-  <ChatBot></ChatBot>
 </template>
 
 <script setup>
