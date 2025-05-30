@@ -1,7 +1,7 @@
 <template>
   <div class="signup-container">
-    <h1 style="text-align: center; margin-bottom: 1.5rem; color: #6366f1;">IBD Journal</h1>
     <form class="signup-form" @submit.prevent="signup">
+      <h1 style="margin-bottom: 1.5rem; color: #6366f1;">IBD Journal</h1>
       <h2>Create Account</h2>
       <div class="form-group">
         <label>Username</label>
@@ -21,13 +21,13 @@
       </button>
       <div v-if="error" class="error">{{ error }}</div>
       <div v-if="success" class="success">{{ success }}</div>
-    </form>
-    <div class="login-link" style="margin-top: 1rem; text-align: center;">
+      <div class="login-link" style="margin-top: 1rem">
       Already have an account?
       <router-link to="/login" style="color: #6366f1; text-decoration: underline; margin-left: 0.3em;">
         Log In!
       </router-link>
     </div>
+    </form>
   </div>
 </template>
 
