@@ -1,5 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap');
 
+.signup-link,
+.login-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: #444;
+}
+
+.signup-link a,
+.login-link a {
+  color: #6366f1;
+  text-decoration: underline;
+  margin-left: 0.3em;
+  font-weight: 500;
+  transition: color 0.18s;
+}
+
+.signup-link a:hover,
+.login-link a:hover {
+  color: #a78bfa;
+}
+
 .login-container,
 .signup-container {
   min-height: 100vh;

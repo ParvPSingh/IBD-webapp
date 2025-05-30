@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <h1 style="text-align: center; margin-bottom: 1.5rem; color: #6366f1;">IBD Journal</h1>
     <form class="login-form" @submit.prevent="login">
       <h2>Login</h2>
       <div class="form-group">
@@ -16,6 +17,12 @@
       </button>
       <div v-if="error" class="error">{{ error }}</div>
     </form>
+    <div class="signup-link" style="margin-top: 1rem; text-align: center;">
+      Don't have an account?
+      <router-link to="/signup" style="color: #6366f1; text-decoration: underline; margin-left: 0.3em;">
+        Sign Up!
+      </router-link>
+    </div>
   </div>
 </template>
 
